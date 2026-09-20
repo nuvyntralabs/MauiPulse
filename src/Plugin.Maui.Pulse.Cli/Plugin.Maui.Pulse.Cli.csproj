@@ -15,7 +15,7 @@
     <Description>dotnet tool that listens only to Plugin.Maui.* session data: network, queues, sync, permissions, health, leaks, crash breadcrumbs, and device session.</Description>
     <PackageTags>dotnet-maui;maui;cli;dotnet-tool;nuvyntra;observability</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>1.0.0: listen, attach, pull, queues, sync, incident. Allow-listed Plugin.Maui.* sources only.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.1: Align version with the host package. CLI still omits snupkg.</PackageReleaseNotes>
     <RollForward>Major</RollForward>
   </PropertyGroup>
 

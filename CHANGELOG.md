@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Pack `Plugin.Maui.Pulse` with `snupkg` so nuget.org publish matches other Plugin.Maui.* libraries. The CLI still omits symbols.
+
 ## 1.0.0
 
 - Docs (submodule + hub): [README.md](README.md) is architecture and protocol; [USER-GUIDE.md](USER-GUIDE.md) is host + CLI integration only

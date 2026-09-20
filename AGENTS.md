@@ -14,7 +14,7 @@ Live session viewer that listens **only** to Nuvyntra `Plugin.Maui.*` signals an
 - User guide: [USER-GUIDE.md](USER-GUIDE.md) — host + CLI integration only
 - Catalog: https://github.com/nuvyntralabs/MauiEssentials
 - Versions: net10.0
-- Version: 1.0.0
+- Version: 1.0.1
 
 This repo must stay buildable after it is extracted to `nuvyntralabs/MauiPulse` with no MauiEssentials checkout. Do not add `ProjectReference` to other hub folders.
 

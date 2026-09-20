@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <Version>1.0.0</Version>
-    <PackageVersion>1.0.0</PackageVersion>
+    <Version>1.0.1</Version>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Niladri Prasad Padhy</Authors>
     <Company>Nuvyntra Labs</Company>
     <Copyright>Copyright (c) Nuvyntra Labs</Copyright>

@@ -10,8 +10,12 @@
     <Description>One UseMauiPulse() call. Forwards allow-listed Plugin.Maui.* events to the maui-pulse CLI. No per-event POST in the host app.</Description>
     <PackageTags>dotnet-maui;maui;cli;nuvyntra;observability;debug</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>1.0.0: UseMauiPulse() auto-forwards allow-listed Plugin.Maui.* events to maui-pulse.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.1: Pack host symbols (snupkg) so nuget.org publish matches other Plugin.Maui.* libraries.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 

@@ -4,7 +4,7 @@ Add Pulse to a .NET MAUI app, then watch it from the CLI. Architecture and proto
 
 **Host:** `Plugin.Maui.Pulse` → `UseMauiPulse()`  
 **CLI:** `Plugin.Maui.Pulse.Cli` → `maui-pulse`  
-**Version:** 1.0.0 · .NET 10
+**Version:** 1.0.1 · .NET 10
 
 These packages are [Niladri Prasad Padhy](https://github.com/NiladriPadhy) / Nuvyntra Labs work.
 

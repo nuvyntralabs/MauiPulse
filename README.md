@@ -14,7 +14,7 @@ Live session viewer for **Nuvyntra `Plugin.Maui.*` data only**. Pulse does not s
 | **Host NuGet** | https://www.nuget.org/packages/Plugin.Maui.Pulse |
 | **Docs** | https://nuvyntralabs.github.io/toolkits/maui-pulse/ |
 | **Author** | [Niladri Prasad Padhy](https://github.com/NiladriPadhy) / Nuvyntra Labs |
-| **License / version** | MIT · 1.0.0 · `net10.0` |
+| **License / version** | MIT · 1.0.1 · `net10.0` |
 
 Pulse is the **during-the-session** viewer. It does not replace [MauiDev](https://github.com/nuvyntralabs/MauiDev) (`maui-dev doctor`) or [maui-perf](https://www.nuget.org/packages/Plugin.Maui.Performance.Cli). Publishing is pipeline-only — never `dotnet nuget push` from a local clone.
 
@@ -203,7 +203,7 @@ Every session command requires `--package` (one Android `applicationId` or iOS b
 | `queues` | Read-only JobQueue / RetryQueue `*.db3` inspector. Does not drain |
 | `sync` | Read-only OfflineSync `offlinesync.db3` inspector |
 | `incident` | Zip allow-listed files + `manifest.json` |
-| `version` | Print `1.0.0` (no `--package`) |
+| `version` | Print `1.0.1` (no `--package`) |
 
 ```bash
 maui-pulse attach --package com.test.androidapp --android --port 7878 --no-update-check

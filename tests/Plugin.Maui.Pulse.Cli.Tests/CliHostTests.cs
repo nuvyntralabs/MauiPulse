@@ -119,7 +119,7 @@ public sealed class CliHostTests
         var stdout = new StringWriter();
         var code = await CliHost.RunAsync(["version", "--no-update-check"], stdout, new StringWriter(), new StringReader(""));
         Assert.Equal(0, code);
-        Assert.Contains("maui-pulse 1.0.0", stdout.ToString(), StringComparison.Ordinal);
+        Assert.Contains("maui-pulse 1.0.1", stdout.ToString(), StringComparison.Ordinal);
     }
 
     [Fact]
