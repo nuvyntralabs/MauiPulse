@@ -1,0 +1,20 @@
+# maui-pulse
+
+- Problem: live session viewer for Nuvyntra Plugin.Maui.* data (network, queues, sync, permissions, health, leaks, crash breadcrumbs, session)
+- CLI NuGet: https://www.nuget.org/packages/Plugin.Maui.Pulse.Cli (`maui-pulse`)
+- Host NuGet: https://www.nuget.org/packages/Plugin.Maui.Pulse (`UseMauiPulse()`)
+- GitHub: https://github.com/nuvyntralabs/MauiPulse
+- Docs: https://nuvyntralabs.github.io/toolkits/maui-pulse/
+- Architecture / protocol: README.md
+- User guide: USER-GUIDE.md (host + CLI integration only)
+- Version: 1.0.0
+- TFMs: net10.0 (CLI tool + host library)
+- Install CLI: `dotnet tool install -g Plugin.Maui.Pulse.Cli --source https://api.nuget.org/v3/index.json`
+- Install host: `dotnet add package Plugin.Maui.Pulse` then `builder.UseMauiPulse()`. Still register the plugins you already use. No per-event POST.
+- Attach: `adb reverse tcp:7878 tcp:7878` then `maui-pulse attach --package <id> --android|--ios --port 7878`
+- `--package` required on every session command. `listen` / `attach` also require `--android` or `--ios`. JSON for another app is dropped.
+- Commands: listen, attach, pull, queues, sync, incident, version
+- Allow-list + host register: NetworkMonitor (`AddNetworkMonitor` / `StatusChanged`), NetworkDiagnostics (`UseNetworkDiagnostics` / `Completed`), JobQueue (`UseMauiJobQueue` / `JobFailed` + `plugin.maui.jobqueue.db3`), RetryQueue (`UseMauiRetryQueue` / `OperationFailed` + `plugin.maui.retryqueue.db3`), OfflineSync (`UseOfflineSync` / `ConflictDetected` `StatusChanged` `SyncCompleted` + `offlinesync.db3`), PermissionFlow (`UsePermissionFlow` / `FlowCompleted` `PermissionChanged`), AppHealth (`UseAppHealth` / `HealthChanged`), LeakAnalyser (`UseLeakAnalyser` / `OnLeaked`), Diagnostics (`UseMauiDiagnostics` / `AnrDetected` + `maui-diagnostics/`), DeviceSession (`UseDeviceSession` / `SessionStarted`)
+- Sample host: `samples/Pulse.Sample` (`com.test.androidapp` / `com.test.ios`). `UseMauiPulse()` + demo plugin events. Do not add it to Pulse.sln. Do not PackageReference sibling plugins.
+- Update check: interactive nuget.org prompt every 4 hours. Skip: `--no-update-check` or `NUVYNTRA_NO_UPDATE_CHECK=1`. Cache: `~/.nuvyntra/cli-updates.json`. Does not phone home.
+- Do not `dotnet add package Plugin.Maui.Pulse.Cli` into an app. Do not use instead of maui-dev or maui-perf. Do not parse logcat / Firebase / Sentry. Missing plugins skip that lane.

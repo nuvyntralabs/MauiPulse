@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <RootNamespace>Plugin.Maui.Pulse</RootNamespace>
+    <AssemblyName>Plugin.Maui.Pulse</AssemblyName>
+    <PackageId>Plugin.Maui.Pulse</PackageId>
+    <Title>Plugin.Maui.Pulse — automatic Debug sink for maui-pulse</Title>
+    <Description>One UseMauiPulse() call. Forwards allow-listed Plugin.Maui.* events to the maui-pulse CLI. No per-event POST in the host app.</Description>
+    <PackageTags>dotnet-maui;maui;cli;nuvyntra;observability;debug</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>1.0.0: UseMauiPulse() auto-forwards allow-listed Plugin.Maui.* events to maui-pulse.</PackageReleaseNotes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Plugin.Maui.Pulse.Tests" />
+  </ItemGroup>
+
+</Project>

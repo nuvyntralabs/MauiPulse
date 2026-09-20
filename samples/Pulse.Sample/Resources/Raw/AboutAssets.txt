@@ -1,0 +1,1 @@
+Packaged Pulse fixtures live next to this file via the fixtures/ MauiAsset include.

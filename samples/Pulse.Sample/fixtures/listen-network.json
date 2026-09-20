@@ -1,0 +1,8 @@
+{
+  "package": "com.test.androidapp",
+  "source": "Plugin.Maui.NetworkMonitor",
+  "lane": "network",
+  "signal": "StatusChanged",
+  "summary": "captive portal",
+  "state": "running"
+}

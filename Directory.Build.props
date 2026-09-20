@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Niladri Prasad Padhy</Authors>
+    <Company>Nuvyntra Labs</Company>
+    <Copyright>Copyright (c) Nuvyntra Labs</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://nuvyntralabs.github.io/toolkits/maui-pulse/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nuvyntralabs/MauiPulse</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

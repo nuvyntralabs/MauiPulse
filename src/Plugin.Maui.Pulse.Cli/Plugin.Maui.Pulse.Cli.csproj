@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>maui-pulse</ToolCommandName>
+    <IsPackable>true</IsPackable>
+    <IncludeSymbols>false</IncludeSymbols>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <RootNamespace>Plugin.Maui.Pulse.Cli</RootNamespace>
+    <AssemblyName>Plugin.Maui.Pulse.Cli</AssemblyName>
+    <PackageId>Plugin.Maui.Pulse.Cli</PackageId>
+    <Title>maui-pulse — live Nuvyntra plugin session CLI</Title>
+    <Description>dotnet tool that listens only to Plugin.Maui.* session data: network, queues, sync, permissions, health, leaks, crash breadcrumbs, and device session.</Description>
+    <PackageTags>dotnet-maui;maui;cli;dotnet-tool;nuvyntra;observability</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>1.0.0: listen, attach, pull, queues, sync, incident. Allow-listed Plugin.Maui.* sources only.</PackageReleaseNotes>
+    <RollForward>Major</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Plugin.Maui.Pulse.Core\Plugin.Maui.Pulse.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.51.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>
