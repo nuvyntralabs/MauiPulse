@@ -14,3 +14,4 @@
 - `incident` — zip allow-listed files plus `manifest.json`
 - Missing plugins skip that lane. Unknown sources are dropped.
 - Interactive nuget.org self-update check every 4 hours (`--no-update-check` to skip)
+- CI: version alignment → NuGet key / unpublished version → tests → pack host + CLI → nuget.org and GitHub Packages (`NUGET_KEY`)

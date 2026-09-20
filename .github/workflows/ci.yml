@@ -1,21 +1,96 @@
-# PackAsTool pipeline for Plugin.Maui.Pulse.Cli (command maui-pulse).
-# Tests and pack only until this tree is extracted to nuvyntralabs/MauiPulse.
+# Plugin.Maui.Pulse (host) + Plugin.Maui.Pulse.Cli (maui-pulse).
+# Same fail-fast order as other Nuvyntra CLI / plugin repos:
+# version alignment → NuGet key + unpublished version → tests → pack → publish.
+# net10.0 only (no MAUI OS TFMs, no Windows merge). CLI PackAsTool omits snupkg.
 # Never push NuGet from a local clone.
 name: CI
 
 on:
   push:
     branches: [main]
-  pull_request:
+    tags: ["v*.*.*"]
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Unused. CI publishes after key, version, test, and pack checks succeed
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
+  version-align:
+    name: Version alignment
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - name: Checkout package repo
+        uses: actions/checkout@v4
+
+      - name: Fetch hub CI scripts
+        uses: actions/checkout@v4
+        with:
+          repository: nuvyntralabs/MauiEssentials
+          ref: main
+          path: .ci-tools
+
+      - name: Require matching packable package versions
+        id: check
+        run: |
+          set -euo pipefail
+          script=".github/scripts/check-versions.py"
+          if [ ! -f "$script" ]; then
+            script=".ci-tools/.github/scripts/check-versions.py"
+          fi
+          python3 "$script" --plugin-root .
+
+  version-check:
+    name: NuGet release
+    needs: [version-align]
+    if: success()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout package repo
+        uses: actions/checkout@v4
+
+      - name: Fetch hub CI scripts
+        uses: actions/checkout@v4
+        with:
+          repository: nuvyntralabs/MauiEssentials
+          ref: main
+          path: .ci-tools
+
+      - name: Check NUGET_KEY and published version
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        run: |
+          set -euo pipefail
+          script=".github/scripts/check-nuget-release.py"
+          if [ ! -f "$script" ]; then
+            script=".ci-tools/.github/scripts/check-nuget-release.py"
+          fi
+          python3 "$script" --plugin-root .
+
   test:
     name: Unit tests
+    needs: [version-check]
+    if: success()
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -25,8 +100,75 @@ jobs:
           dotnet-version: "10.0.x"
       - name: Test
         run: dotnet test Pulse.sln -c Release --nologo
-      - name: Pack (never push)
+
+  pack:
+    name: Pack host and CLI
+    needs: [test]
+    if: success()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Pack
         run: |
-          mkdir -p artifacts
-          dotnet pack src/Plugin.Maui.Pulse/Plugin.Maui.Pulse.csproj -c Release -o artifacts --nologo
-          dotnet pack src/Plugin.Maui.Pulse.Cli/Plugin.Maui.Pulse.Cli.csproj -c Release -o artifacts --nologo
+          set -euo pipefail
+          mkdir -p artifacts/nuget
+          dotnet pack src/Plugin.Maui.Pulse/Plugin.Maui.Pulse.csproj -c Release -o artifacts/nuget --nologo
+          dotnet pack src/Plugin.Maui.Pulse.Cli/Plugin.Maui.Pulse.Cli.csproj -c Release -o artifacts/nuget --nologo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nuget-Pulse-Linux
+          path: artifacts/nuget/*
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: nuget.org and GitHub Packages
+    needs: [pack]
+    if: success()
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout package repo
+        uses: actions/checkout@v4
+
+      - name: Fetch hub CI scripts
+        uses: actions/checkout@v4
+        with:
+          repository: nuvyntralabs/MauiEssentials
+          ref: main
+          path: .ci-tools
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Download Linux packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: nuget-*-Linux
+          path: packages
+          merge-multiple: true
+
+      - name: Push nupkg
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          script=".github/scripts/push-nuget-packages.py"
+          if [ ! -f "$script" ]; then
+            script=".ci-tools/.github/scripts/push-nuget-packages.py"
+          fi
+          python3 "$script" --packages-dir packages

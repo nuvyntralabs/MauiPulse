@@ -322,6 +322,8 @@ dotnet pack Pulse/src/Plugin.Maui.Pulse/Plugin.Maui.Pulse.csproj -c Release
 dotnet pack Pulse/src/Plugin.Maui.Pulse.Cli/Plugin.Maui.Pulse.Cli.csproj -c Release
 ```
 
+CI (`Pulse/.github/workflows/ci.yml`) is the same fail-fast order as MauiDev / Nuvyn: version alignment → NuGet key / unpublished version → tests → pack both nupkgs → nuget.org and GitHub Packages. Never `dotnet nuget push` from a local clone.
+
 ---
 
 ## What it is not

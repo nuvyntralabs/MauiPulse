@@ -67,5 +67,5 @@ maui-pulse attach --package com.test.ios --ios --port 7878 --no-update-check
 - Observability is a pipe, not a tenth lane. Only Network / Health / Sync / Session domains map.
 - `Plugin.Maui.Pulse.Core` is internal (`IsPackable=false`). Pack `Plugin.Maui.Pulse` (host) and `Plugin.Maui.Pulse.Cli` (tool) with the same Version.
 - `UseMauiPulse()` reflects allow-listed plugin types already in the host. Do not ProjectReference sibling plugin folders.
-- Publishing is pipeline-only. Never `dotnet nuget push` from a local clone.
+- Publishing is pipeline-only. Never `dotnet nuget push` from a local clone. CI uses `NUGET_KEY` and `GITHUB_TOKEN` (`Pulse/.github/workflows/ci.yml`).
 - Interactive nuget.org self-update check every 4 hours (`[y/N]`, default no). Skip with `--no-update-check` or `NUVYNTRA_NO_UPDATE_CHECK=1`. Cache: `~/.nuvyntra/cli-updates.json`. Does not phone home.
